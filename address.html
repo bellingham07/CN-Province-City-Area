@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <select v-model="province" placeholder="请选择">
+            <option v-for="pro in address" ::key="pro.value" :value="pro.text" :label="pro.text"></option>
+        </select>
+        <select v-model="city" placeholder="请选择">
+            <option v-for="pro in cityInfo" ::key="pro.value" :value="pro.text" :label="pro.text"></option>
+        </select>
+        <select v-model="area" placeholder="请选择">
+            <option v-for="pro in areaInfo" ::key="pro.value" :value="pro.text" :label="pro.text"></option>
+        </select>
+        <br>
+        省份:<span>{{this.province}}</span><br>
+        城市:<span>{{this.city}}</span><br>
+        地区:<span>{{this.area}}</span><br>
+
+    </div>
+</body>
+
+<script type="module">
+    import {
+        data
+    } from './address.js'
+
+    new Vue({
+        el: "#app",
+        data() {
+            return{
+                province:'',
+                city:'',
+                area:'',
+                address:data,
+            }
+        },
+        computed:{
+            cityInfo(){
+                let result=[]
+               this.address.forEach((value)=>{
+                if(value.text===this.province){
+                    result=value.children
+                }
+               })
+               return result
+            },
+            areaInfo(){
+                let r=[]
+                this.cityInfo.forEach((value)=>{
+                if(value.text===this.city){
+                    r=value.children
+                }
+               })
+               return r
+            }
+        }
+    })
+</script>
+
+</html>
